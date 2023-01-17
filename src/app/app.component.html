@@ -1,7 +1,9 @@
-<p *ngFor="let character of characters$ | async">
-  {{ character.name }}
-</p>
 <h1>Can drive</h1>
 <p *ngFor="let characterCanDrive of charactersWithVehicles$ | async">
   {{ characterCanDrive.name }}
+</p>
+
+<h2>All characters Name</h2>
+<p *ngFor="let character of characters$ | async">
+  {{ character.name }}
 </p>

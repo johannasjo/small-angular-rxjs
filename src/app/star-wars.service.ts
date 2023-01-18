@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +20,18 @@ export class StarwarsService {
   public characters$: Observable<any> = this._characters$.asObservable();
   public charactersWithVehicles$: Observable<any> = this.characters$.pipe(
     map((characters) => {
+      console.log('charchters', characters);
       return characters.filter((character) => character.vehicles.length);
     })
   );
   public planets$: Observable<any> = this._planets$.asObservable();
+  public planetsWithCharacters$: Observable<any> = this.planets$.pipe(
+    map((planets) => {
+      console.log('planets res', planets);
+      return planets.filter((planet) => planet.residents.length);
+    }),
+    tap((planets) => console.log('planets with res', planets))
+  );
 
   fetchCharacters() {
     this.http
@@ -38,11 +46,12 @@ export class StarwarsService {
     this.http
       .get(`${this.baseUrl}/planets`)
       .pipe(
-        tap(console.log),
-        map((response) => response.results),
+        map((response: any) => response.results),
         tap((planets) => console.log('planets', planets))
       )
-      .subscribe();
+      .subscribe((planets) => {
+        this._planets$.next(planets);
+      });
   }
 
   // not really neccessary if I have public observables

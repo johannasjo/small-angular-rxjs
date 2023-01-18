@@ -7,3 +7,8 @@
 <p *ngFor="let character of characters$ | async">
   {{ character.name }}
 </p>
+
+<h2>All planet names</h2>
+<p *ngFor="let planet of planets$ | async">
+  {{ planet.name }}
+</p>

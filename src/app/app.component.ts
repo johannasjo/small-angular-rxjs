@@ -12,4 +12,5 @@ export class AppComponent {
   public characters$: Observable<any> = this.starWarsService.characters$;
   public charactersWithVehicles$: Observable<any> =
     this.starWarsService.charactersWithVehicles$;
+  public planets$: Observable<any> = this.starWarsService.planets$;
 }
